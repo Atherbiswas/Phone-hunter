@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phone hunter</title>
+    <!-- bootstrap cdn link  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  </head>
+  <body>
+      <header>
+            <h1>Welcome to phone hunter!</h1>
+        </header>
+        <main class="container">
+            <!-- search phone by button  -->
+            <section>
+                <div class="mb-3 w-25">
+                    <input id="search-field" type="email" class="form-control" id="exampleFormControlInput1" placeholder="search">
+                    <button id="btn-search" class="btn btn-primary mt-2">Search</button>
+                  </div>
+            </section>
+            <!-- display phone from api url link -->
+            <section>
+                <div id="phones-container" class="row row-cols-1 row-cols-md-3 g-4">
+                    
+                  </div>
+                  <!-- to show error message for no phone found -->
+                  <div id="no-found-message" class="mt-4 d-none">
+                    <h3 class="text-danger">No Phone Found.Please try again search</h3>
+                  </div>
+            </section>
+            <!-- loading data showing by spinner  -->
+            <section id="spinner" class="d-none">
+                <div class="text-center mt-5">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+            </section>
+        </main>
+        <!-- bootstrap js cdn link  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <!-- javascript file link  -->
+    <script src="js/phone.js"></script>
+  </body>
+</html>
