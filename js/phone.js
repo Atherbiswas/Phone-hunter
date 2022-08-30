@@ -1,17 +1,24 @@
 //Get phone data from api url link
-const loadPhones = async(searchText) => {
+const loadPhones = async(searchText,dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
     const res = await fetch(url);
     const data = await res.json();
-    displayPhones(data.data);
+    displayPhones(data.data,dataLimit);
 }
 //To show phone to ui with function with dynamic api
-const displayPhones = phones => {
+const displayPhones = (phones,dataLimit) => {
     const phonesContainer = document.getElementById('phones-container');
     phonesContainer.innerHTML = '';
-    //display 15 phones part start
-    phones = phones.slice(0,15);
-    //display 15 phones part end
+    //display show all btn with 10 phones part start
+    const showAll = document.getElementById('show-all');
+    if(dataLimit && phones.length > 10){
+        phones = phones.slice(0,10);
+        showAll.classList.remove('d-none');
+    }
+    else{
+        showAll.classList.add('d-none');
+    }
+    //display show all btn with 10 phones part end
     //display no phone found message show start
     const noPhone = document.getElementById('no-found-message');
     if(phones.length === 0){
@@ -40,14 +47,18 @@ const displayPhones = phones => {
     toggleSpinner(false);
     //stop spinner lodder start
 }
-// search phone by button with add event listner
-document.getElementById('btn-search').addEventListener('click', function(){
+//display phone by common function 
+const processSearch = (dataLimit) => {
     //start spinner part satrt 
     toggleSpinner(true);
     //start spinner part end
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
-    loadPhones(searchText)
+    loadPhones(searchText,dataLimit);
+}
+// search phone by button with add event listner
+document.getElementById('btn-search').addEventListener('click', function(){
+    processSearch(10);
 })
 //function for loader spinner
 const toggleSpinner = isLoading => {
@@ -59,4 +70,8 @@ const toggleSpinner = isLoading => {
         spinner.classList.add('d-none');
     }
 }
+//display all phone by show all button
+document.getElementById('btn-showall').addEventListener('click', function(){
+    processSearch();
+})
 // loadPhones();
