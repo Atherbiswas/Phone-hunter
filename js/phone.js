@@ -36,8 +36,9 @@ const displayPhones = (phones,dataLimit) => {
         <div class="card">
             <img src="${phone.image}" class="card-img-top" alt="...">
             <div class="card-body">
-            <h5 class="card-title">${phone.phone_name}</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title">${phone.phone_name}</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <a onclick="loadPhoneDetail('${phone.slug}')" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetailModal">Show Details</a>
             </div>
         </div>
     `;
@@ -60,6 +61,12 @@ const processSearch = (dataLimit) => {
 document.getElementById('btn-search').addEventListener('click', function(){
     processSearch(10);
 })
+//search field work by enter key
+document.getElementById('search-field').addEventListener('keypress', function(e){
+    if(e.key === 'Enter'){
+        processSearch(10);  
+    }
+})
 //function for loader spinner
 const toggleSpinner = isLoading => {
     const spinner = document.getElementById('spinner');
@@ -74,4 +81,21 @@ const toggleSpinner = isLoading => {
 document.getElementById('btn-showall').addEventListener('click', function(){
     processSearch();
 })
-// loadPhones();
+//phone details with onclick handler
+const loadPhoneDetail =async id => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    displayPhoneDetail(data.data);
+}
+const displayPhoneDetail = phone => {
+    console.log(phone)
+    const modalTitle = document.getElementById('phoneDetailModaLabel');
+    modalTitle.innerText = phone.name;
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.innerHTML = `
+    <p>Release Date: ${phone.releaseDate ? phone.releaseDate : 'No Release date found' }</p>
+    <p>Main  Features : ${phone.mainFeatures ? phone.mainFeatures.storage: 'Main Features is not available now' }</p>
+    `
+}
+loadPhones('a');
